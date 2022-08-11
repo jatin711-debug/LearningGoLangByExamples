@@ -2,45 +2,51 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
-type geometry interface {
-	area() float64
-	perim() float64
+const (
+	sunday = iota
+	monday
+)
+
+type Animals interface {
+	walk()
+	bark()
 }
 
-type rect struct {
-	width, height float64
-}
-type circle struct {
-	radius float64
+type Human struct {
+	legs  int
+	hands int
 }
 
-func (r rect) area() float64 {
-	return r.width * r.height
-}
-func (r rect) perim() float64 {
-	return 2*r.width + 2*r.height
+type Deer struct {
+	legs int
 }
 
-func (c circle) area() float64 {
-	return math.Pi * c.radius * c.radius
-}
-func (c circle) perim() float64 {
-	return 2 * math.Pi * c.radius
+func (h Human) walk() {
+	fmt.Println("Human HJere", h.legs)
 }
 
-func measure(g geometry) {
-	fmt.Println(g)
-	fmt.Println(g.area())
-	fmt.Println(g.perim())
+func (h Human) bark() {
+	fmt.Println("Human Speech")
+}
+
+func (d Deer) walk() {
+	fmt.Println("Deer walk", d.legs)
+}
+
+func (d Deer) bark() {
+	fmt.Println("Deer bark")
+}
+
+func perform(a Animals) {
+	a.walk()
+	a.bark()
 }
 
 func main() {
-	r := rect{width: 3, height: 4}
-	c := circle{radius: 5}
-
-	measure(r)
-	measure(c)
+	h := Human{2, 2}
+	d := Deer{4}
+	perform(h)
+	perform(d)
 }
